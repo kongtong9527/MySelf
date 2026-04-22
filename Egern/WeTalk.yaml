@@ -7,12 +7,12 @@ scriptings:
   - http_request:
       name: "WeTalk 抓包"
       match: "^https://api\\.wetalkapp\\.com/app/queryBalanceAndBonus"
-      script_url: "http://192.168.11.132:5500/Egern/WeTalk.js"
+      script_url: "https://raw.githubusercontent.com/kongtong9527/MySelf/main/Egern/WeTalk.js"
       timeout: 30
   - schedule:
       name: "WeTalk签到"
       cron: "20 8,20 * * *"
-      script_url: "http://192.168.11.132:5500/Egern/WeTalk.js"
+      script_url: "https://raw.githubusercontent.com/kongtong9527/MySelf/main/Egern/WeTalk.js"
       timeout: 120
 
 mitm:
