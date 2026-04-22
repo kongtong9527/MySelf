@@ -249,8 +249,7 @@ export default async function(ctx) {
     let baseUA = '';
     Object.keys(headersMap).forEach(k => { if (k.toLowerCase() === 'user-agent') baseUA = headersMap[k]; });
 
-    const raw = localStorage.getItem(storeKey);
-    const store = raw ? JSON.parse(raw) : { version: 1, accounts: {}, order: [] };
+    const store = ctx.storage.getJSON(storeKey) || { version: 1, accounts: {}, order: [] };
     if (!store.accounts) store.accounts = {};
     if (!Array.isArray(store.order)) store.order = Object.keys(store.accounts);
 
@@ -270,7 +269,7 @@ export default async function(ctx) {
       updatedAt: now
     };
     if (!existed) store.order.push(fp);
-    localStorage.setItem(storeKey, JSON.stringify(store));
+    ctx.storage.setJSON(storeKey, store);
 
     const total = store.order.length;
     const subtitle = existed ? '🔄 账号参数已更新' : '✅ 新账号已入库';
@@ -280,8 +279,7 @@ export default async function(ctx) {
   }
 
   // schedule mode: run check-in task
-  const raw = localStorage.getItem(storeKey);
-  const store = raw ? JSON.parse(raw) : { version: 1, accounts: {}, order: [] };
+  const store = ctx.storage.getJSON(storeKey) || { version: 1, accounts: {}, order: [] };
   if (!store.accounts) store.accounts = {};
   if (!Array.isArray(store.order)) store.order = Object.keys(store.accounts);
 
