@@ -1,0 +1,21 @@
+name: "WeTalk 自动化签到+视频奖励"
+description: "WeTalk 自动签到和视频奖励，支持多账号"
+author: "TG@ZenMoFiShi"
+icon: "antenna.radiowaves.left.and.right"
+
+scriptings:
+  - http_request:
+      name: "WeTalk 抓包"
+      match: "^https://api\\.wetalkapp\\.com/app/queryBalanceAndBonus"
+      script_url: "http://192.168.11.132:5500/Egern/WeTalk.js"
+      timeout: 30
+  - schedule:
+      name: "WeTalk签到"
+      cron: "20 8,20 * * *"
+      script_url: "http://192.168.11.132:5500/Egern/WeTalk.js"
+      timeout: 120
+
+mitm:
+  hostnames:
+    includes:
+      - "api.wetalkapp.com"
